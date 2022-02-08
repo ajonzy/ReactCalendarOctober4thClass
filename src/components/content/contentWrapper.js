@@ -21,7 +21,12 @@ export default function contentWrapper(props) {
 
         for (let i=1; i<=props.daysInMonth; i++) {
             calendarBoxes.push(
-                <CalendarBox date={i} />
+                <CalendarBox 
+                    date={i} 
+                    month={props.month}
+                    year={props.year}
+                    reminder={props.reminderData.filter(data => data.day == i)[0]}
+                />
             )
         }
 

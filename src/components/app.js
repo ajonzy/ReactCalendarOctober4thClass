@@ -21,14 +21,24 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    fetch("http://127.0.0.1:5000/month/get/2022")
-    .then(response => response.json())
-    .then(data => this.setState({
-      data: this.formatData(data),
-      monthData: this.formatData(data)[this.state.currentIndex] 
-    }))
-    .catch(error => console.log("Error getting months: ", error))
+    const getData = async () => {
+      await fetch("http://127.0.0.1:5000/month/get/2022")
+      .then(response => response.json())
+      .then(data => this.setState({
+        data: this.formatData(data),
+        monthData: this.formatData(data)[this.state.currentIndex] 
+      }))
+      .catch(error => console.log("Error getting months: ", error))
+    
+      fetch(`http://127.0.0.1:5000/reminder/get/${this.state.monthData.name}/2022`)
+      .then(response => response.json())
+      .then(data => this.setState({
+        reminderData: data
+      }))
+      .catch(error => console.log("Error getting reminders: ", error))
+    }
 
+    getData()
   }
 
   formatData(data) {
@@ -65,6 +75,9 @@ export default class App extends Component {
           daysInMonth={this.state.monthData.days_in_month}
           daysInPreviousMonth={this.state.monthData.days_in_previous_month}
           startDay={this.state.monthData.start_day}
+          reminderData={this.state.reminderData}
+          month={this.state.monthData.name}
+          year={this.state.monthData.year}
         />
         <Footer year={this.state.monthData.year} />
       </div>
