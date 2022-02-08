@@ -9,7 +9,7 @@ export default function contentWrapper(props) {
 
         for (let i=1; i<=props.startDay; i++) {
             previousCalendarBoxes.push(
-                <CalendarBox date={props.daysInPreviousMonth - (props.startDay - i)} />
+                <CalendarBox key={`P${i}`} date={props.daysInPreviousMonth - (props.startDay - i)} />
             )
         }
 
@@ -22,6 +22,7 @@ export default function contentWrapper(props) {
         for (let i=1; i<=props.daysInMonth; i++) {
             calendarBoxes.push(
                 <CalendarBox 
+                    key={`${i}-${props.month}-${props.year}`}
                     date={i} 
                     month={props.month}
                     year={props.year}
@@ -38,7 +39,7 @@ export default function contentWrapper(props) {
 
         for (let i=1; i<=(42 - props.daysInMonth - props.startDay); i++) {
             nextCalendarBoxes.push(
-                <CalendarBox date={i} />
+                <CalendarBox key={`N${i}`} date={i} />
             )
         }
 
